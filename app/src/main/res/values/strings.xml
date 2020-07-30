@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">P0351_TestProject</string>
+    <string name="download">Download</string>
+    <string name="show_data">Show data</string>
+    <string name="clear_db">Clear DB</string>
+    <string name="activity_two">Activity two</string>
+    <string name="s">s</string>
+    <string name="some_text">Some text</string>
+    <string name="t">T</string>
+</resources>
