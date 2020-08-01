@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +23,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    final String LOG_TAG = "myLogs";
+    public static final String LOG_TAG = "myLogs";
 
     RequestQueue mQueue;
 
@@ -110,44 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btnShow:
-                SQLiteDatabase database = dbHelper.getWritableDatabase();
                 intent = new Intent(this, ShowData.class);
-
-                Cursor cursor = database.query(DBHelper.THIS_TABLE, null, null, null, null,null, null);
-
-                if(cursor.moveToFirst()) {
-                    int id_Index = cursor.getColumnIndex(DBHelper.KEY_ID);
-                    int email_Index = cursor.getColumnIndex(DBHelper.KEY_EMAIL);
-                    int first_name_Index = cursor.getColumnIndex(DBHelper.KEY_FIRST_NAME);
-                    int last_name_Index = cursor.getColumnIndex(DBHelper.KEY_LAST_NAME);
-                    int avatar_Index = cursor.getColumnIndex(DBHelper.KEY_AVATAR);
-                    int company_Index = cursor.getColumnIndex(DBHelper.KEY_COMPANY);
-                    int url_Index = cursor.getColumnIndex(DBHelper.KEY_URL);
-                    int text_Index = cursor.getColumnIndex(DBHelper.KEY_TEXT);
-
-                    do {
-                        Log.d(LOG_TAG,  cursor.getString(id_Index) + cursor.getString(email_Index) + cursor.getString(first_name_Index)+
-                                cursor.getString(last_name_Index) + cursor.getString(avatar_Index) + cursor.getString(company_Index) +
-                                cursor.getString(url_Index) + cursor.getString(text_Index));
-                        // собираем строку для отправки во второй активити
-                        String sent = "id: " + cursor.getString(id_Index) + "\n" + "Email: " + cursor.getString(email_Index) +
-                                "\n" +  "First name: " + cursor.getString(first_name_Index) + "\n" +  "Last name: " +
-                                cursor.getString(last_name_Index) + "\n" +  "Avatar: " +  cursor.getString(avatar_Index) + "\n" + "\n" + "Company: " +
-                                cursor.getString(company_Index) + "\n" + "Url: "+ cursor.getString(url_Index) + "\n" + "Text: "+  cursor.getString(text_Index) + "\n";
-                        // заполняем intent первый раз
-                        intent.putExtra("fsent", sent);
-                    } while (cursor.moveToNext());
-                    // если в таблице нет данных
-                }// if
-                else {
-                    Log.d(LOG_TAG, "0 rows");
-                    String diff = "Database is empty";
-
-                    // заполняем intent второй раз
-                    intent.putExtra("fsent", diff);
-                }// else
                 startActivity(intent);
-                cursor.close();
                 break;
 
             // очищаем базу данных
@@ -161,3 +124,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dbHelper.close();
     }// Onclick
 }// class
+/*
+
+ */
