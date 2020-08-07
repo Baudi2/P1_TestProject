@@ -16,7 +16,6 @@ public class ShowData extends AppCompatActivity {
     TextView tvText, tvText_2;
     ImageView imageView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,24 +41,24 @@ public class ShowData extends AppCompatActivity {
             int company_Index = cursor.getColumnIndex(DBHelper.KEY_COMPANY);
             int url_Index = cursor.getColumnIndex(DBHelper.KEY_URL);
             int text_Index = cursor.getColumnIndex(DBHelper.KEY_TEXT);
-            String exampleUrl = cursor.getString(avatar_Index);
-
+            String url = cursor.getString(avatar_Index);
 
             do {
                 Log.d(MainActivity.LOG_TAG,  cursor.getString(id_Index) + cursor.getString(email_Index) + cursor.getString(first_name_Index)+
-                        cursor.getString(last_name_Index) + cursor.getString(avatar_Index));
-                // собираем строку для отправки во второй активити
+                        cursor.getString(last_name_Index) + cursor.getString(avatar_Index) + cursor.getString(company_Index) + cursor.getString(url_Index)
+                + cursor.getString(text_Index));
+                // собираем строку для отображение данных из базы
                 String sent = "id: " + cursor.getString(id_Index) + "\n" + "Email: " + cursor.getString(email_Index) +
                         "\n" +  "First name: " + cursor.getString(first_name_Index) + "\n" +  "Last name: " +
                         cursor.getString(last_name_Index) + "\n" +  "Avatar: " + "\n";
                 tvText.setText(sent);
-                Glide.with(this).load(exampleUrl).into(imageView);
-                String sent2 = "Company: " + cursor.getString(company_Index) + "\n" +
-                        "Url: "+ cursor.getString(url_Index) + "\n" + "Text: "+  cursor.getString(text_Index) + "\n";
+                Glide.with(this).load(url).into(imageView);
+                String sent2 = "Company: " + cursor.getString(company_Index) + "\n" + "Url: " + cursor.getString(url_Index) + "\n" +
+                      "Text: " + cursor.getString(text_Index);
                 tvText_2.setText(sent2);
             } while (cursor.moveToNext());
         }// if
-        // если в таблице не данных
+        // если в таблице нет данных
         else {
             Log.d(MainActivity.LOG_TAG, "0 rows");
             String diff = "Database is empty";
@@ -70,7 +69,6 @@ public class ShowData extends AppCompatActivity {
         // добавление кнопки "назад" в actionbar
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
-
     }// onCreate
 
     // реализация метода для кнопки "назад"

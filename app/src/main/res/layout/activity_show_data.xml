@@ -31,7 +31,7 @@
         android:id="@+id/llMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         android:padding="6dp"
         tools:ignore="UseCompoundDrawables">
@@ -56,9 +56,12 @@
             android:id="@+id/tvText_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
+            android:autoLink="all"
+            android:clickable="true"
             android:textSize="20sp"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:focusable="true" />
     </LinearLayout>
     </ScrollView>
 </LinearLayout>
