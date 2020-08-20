@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
-    public static final int THIS_DATABASE_VERSION_2 = 2;
+    public static final int THIS_DATABASE_VERSION_3 = 3;
     public static final String THIS_DATABASE_NAME = "database";
     public static final String THIS_TABLE = "thisTable";
 
@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String KEY_TEXT = "text";
 
     public DBHelper(Context context) {
-        super(context, THIS_DATABASE_NAME, null, THIS_DATABASE_VERSION_2);
+        super(context, THIS_DATABASE_NAME, null, THIS_DATABASE_VERSION_3);
     }// DBHelper constructor
 
     @Override
