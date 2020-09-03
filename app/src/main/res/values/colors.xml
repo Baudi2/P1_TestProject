@@ -3,8 +3,20 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="white">#FFFFFF</color>
-    <color name="ButtonCl">#E91E63</color>
-    <color name="Button">#00BCD4</color>
-    <color name="bbbb">#66BB6A</color>
+    <color name="btn_two">#26A69A</color>
+    <color name="btn_two_dif">#52A19A</color>
+    <color name="btn_two_pressed">#1A776E</color>
+    <color name="btn_two_dif_pressed">#30837B</color>
+    <color name="text">#FFFFFF</color>
+    <color name="btn_default">#EF5350</color>
+    <color name="btn_default_lighter">#EC8A88</color>
+    <color name="btn_pressed_first">#CD4845</color>
+    <color name="btn_pressed_second">#C35F5D</color>
+    <color name="button_save_one">#ECDC52</color>
+    <color name="button_save_two">#C6B945</color>
+    <color name="button_save_pressed_one">#AEA23F</color>
+    <color name="button_save_pressed_two">#8F8633</color>
+    <color name="button_show">#29B6F6</color>
+    <color name="button_show_pressed">#1B7AA5</color>
+    <color name="black">#000000</color>
 </resources>

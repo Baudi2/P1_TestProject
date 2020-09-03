@@ -1,11 +1,9 @@
 <resources>
-    <string name="app_name">P0351_TestProject</string>
+    <string name="app_name">Room and Retrofit</string>
     <string name="download">Download</string>
-    <string name="show_data">Show data</string>
-    <string name="clear_db">Clear DB</string>
-    <string name="activity_two">Activity two</string>
-    <string name="s">s</string>
-    <string name="some_text">Some text</string>
-    <string name="t">T</string>
+    <string name="clear">Clear</string>\
+    <string name="activity_two">Activity Two</string>
+    <string name="show">Show</string>
+    <string name="database_is_empty">Database is empty</string>
     <string name="todo">TODO</string>
 </resources>

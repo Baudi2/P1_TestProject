@@ -1,125 +1,106 @@
 package ru.startandroid.develop.p0351_testproject;
-
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.lifecycle.ViewModelProvider;
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.moshi.MoshiConverterFactory;
 
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-import org.jetbrains.annotations.NotNull;
+    private ViewModelData viewModelData;
 
-import java.io.IOException;
-import java.util.Objects;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
-    public static final String LOG_TAG = "myLogs";
-
-    Button btnDown, btnShow, btnClear;
-    DBHelper dbHelper;
-    Moshi moshi;
-    JsonAdapter<Gist> gistJsonAdapter;
+    Button button_one, button_two, button_three;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnDown = findViewById(R.id.btnDown);
-        btnDown.setOnClickListener(this);
+        button_one = findViewById(R.id.button_one);
+        button_one.setOnClickListener(this);
 
-        btnShow = findViewById(R.id.btnShow);
-        btnShow.setOnClickListener(this);
+        button_two = findViewById(R.id.button_two);
+        button_two.setOnClickListener(this);
 
-        btnClear = findViewById(R.id.btnClear);
-        btnClear.setOnClickListener(this);
+        button_three = findViewById(R.id.button_three);
+        button_three.setOnClickListener(this);
 
-        dbHelper = new DBHelper (this);
-
-        moshi = new Moshi.Builder().build();
-
-        gistJsonAdapter = moshi.adapter(Gist.class);
+        // объявляем и инициализируем viewModel для доступа к методу insert в базе данных
+        // в качестве context указываем application
+        // объявляем observer
+        viewModelData = new ViewModelProvider
+                (this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()))
+                .get(ViewModelData.class);
+        viewModelData.getAllData().observe(this, dataBases -> {
+        });
     }// onCreate
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
-        // объявляем переменные OkHttp для дальнейшей работы с ними
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("https://reqres.in/api/users/2")
-                .build();
-
-        // объявляем Intent
         Intent intent;
         switch (v.getId()){
-            case R.id.btnDown:
-                // клиент для запрос на JSON file
-                client.newCall(request).enqueue(new Callback() {
-                    // если запрос на JSON file не удался
+            case R.id.button_one:
+                // initializing Retrofit with base URL
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://reqres.in/")
+                        .addConverterFactory(MoshiConverterFactory.create())
+                        .build();
+                // an interface that is used for retrofit to hold rest of the url
+                JsonPlaceHolder jsonPlaceHolder = retrofit.create(JsonPlaceHolder.class);
+
+                // the variable that is needed in order to get the parsed data form JSON
+                Call<Post> call = jsonPlaceHolder.getPost();
+
+                // extracting data from the JSON file
+                call.enqueue(new Callback<Post>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
-                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        e.printStackTrace();
-                    }// onFailure
-
-                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                    @Override
-                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        SQLiteDatabase database = dbHelper.getWritableDatabase();
-                        final ContentValues contentValues = new ContentValues();
-                        // если запрос на JSON файл был успешным
-                        if (response.isSuccessful()) {
-                            // парсит JSON file
-                            final Gist gist = gistJsonAdapter.fromJson(Objects.requireNonNull(response.body()).source());
-                            assert gist != null;
-
-                            // заполняем базу данных
-                            contentValues.put(DBHelper.KEY_ID, gist.data.id);
-                            contentValues.put(DBHelper.KEY_EMAIL, gist.data.email);
-                            contentValues.put(DBHelper.KEY_FIRST_NAME, gist.data.first_name);
-                            contentValues.put(DBHelper.KEY_LAST_NAME, gist.data.last_name);
-                            contentValues.put(DBHelper.KEY_AVATAR, gist.data.avatar);
-
-                            contentValues.put(DBHelper.KEY_COMPANY, gist.ad.company);
-                            contentValues.put(DBHelper.KEY_URL, gist.ad.url);
-                            contentValues.put(DBHelper.KEY_TEXT, gist.ad.text);
+                    public void onResponse(Call<Post> call, Response<Post> response) {
+                        // response if the call wasn't successful
+                        if(!response.isSuccessful()){
+                            return;
                         }// if
-                        long rowID = database.insert(DBHelper.THIS_TABLE, null, contentValues);
-                        Log.d(LOG_TAG, "row inserted, ID = " + rowID);
-                        dbHelper.close();
+                        Post posts = response.body();
+                        assert posts != null;
+
+                        // заполняем строки для отправки базу данных
+                        int id = posts.data.getId();
+                        String email = posts.data.getEmail();
+                        String firstName = posts.data.getFirst_name();
+                        String lastName = posts.data.getLast_name();
+                        String avatar = posts.data.getAvatar();
+
+                        String company = posts.ad.getCompany();
+                        String url = posts.ad.getUrl();
+                        String text = posts.ad.getText();
+
+                        // указываем и отправляем строки в бд
+                        DataBase dataBase = new DataBase(id, email, firstName, lastName, avatar, company, url, text);
+                        viewModelData.insert(dataBase);
                     }// onResponse
+                    @Override
+                    // a failure method to show the error
+                    public void onFailure(Call<Post> call, Throwable t) {
+                        t.printStackTrace();
+                    }// onFailure
                 });// enqueue
-                // Declaring the method to parse JSON object
                 break;
-            case R.id.btnShow:
+            case R.id.button_two:
+                //tvShow.setText("");
+                viewModelData.deleteAllData();
+                break;
+            case R.id.button_three:
                 intent = new Intent(this, ShowData.class);
                 startActivity(intent);
                 break;
-            // очищаем базу данных
-            case R.id.btnClear:
-                SQLiteDatabase databasel = dbHelper.getWritableDatabase();
-                Log.d(LOG_TAG, "--- Clear myTable: ---");
-                int clearCount = databasel.delete(DBHelper.THIS_TABLE, null, null);
-                Log.d(LOG_TAG, "deleted rows count = " + clearCount);
-                break;
         }// switch
-        dbHelper.close();
-    }// Onclick
+    }// onClick
 }// class
