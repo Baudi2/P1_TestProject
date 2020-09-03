@@ -15,12 +15,12 @@ public interface DataBaseDAO {
     // одни и те же данные повторно в бд. Если уже существующие данные
     // совпадают с теми что будут вноситься то и заменяются и не стакаются
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(DataBase dataBase);
+    void insert(UserEntity userEntity);
 
     @Query("DELETE FROM data_table")
     void deleteAllData();
 
     @Query("SELECT * FROM data_table")
-    LiveData<List<DataBase>> getAll();
+    LiveData<List<UserEntity>> getAll();
 
 }// interface

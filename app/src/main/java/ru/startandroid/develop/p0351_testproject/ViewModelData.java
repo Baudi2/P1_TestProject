@@ -15,7 +15,7 @@ import java.util.List;
 public class ViewModelData extends AndroidViewModel {
 
     private DBRepository repository;
-    private LiveData<List<DataBase>> allData;
+    private LiveData<List<UserEntity>> allData;
 
     public ViewModelData(@NonNull Application application) {
         super(application);
@@ -23,15 +23,15 @@ public class ViewModelData extends AndroidViewModel {
         allData = repository.getAllData();
     }// constructor
 
-    public void insert(DataBase dataBase){
-        repository.insert(dataBase);
+    public void insert(UserEntity userEntity){
+        repository.insert(userEntity);
     }// insert
 
     public void deleteAllData(){
         repository.deleteAllData();
     }// deleteAllData
 
-    public LiveData<List<DataBase>> getAllData(){
+    public LiveData<List<UserEntity>> getAllData(){
         return allData;
     }// LiveData
 }// class

@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 // предыдущих двух классов
 // также для уничтожения и создания снова базы в
 // случае ее изменения
-@Database(entities = {DataBase.class}, version = 20)
+@Database(entities = {UserEntity.class}, version = 22)
 public abstract class DataBaseHandler extends RoomDatabase {
     private static DataBaseHandler instance;
 

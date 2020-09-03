@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 // описание того что будет храниться в базе данных
 // Entity: Represents a table within the database
 @Entity(tableName = "data_table")
-public class DataBase {
+public class UserEntity {
 
     // описание колонн базы
     //  Primary key нужно для указания начальной точки для бд
@@ -21,7 +21,7 @@ public class DataBase {
     String url;
     String text;
 
-    public DataBase(int id, String email, String first_name, String last_name, String avatar, String company, String url, String text) {
+    public UserEntity(int id, String email, String first_name, String last_name, String avatar, String company, String url, String text) {
         this.id = id;
         this.email = email;
         this.first_name = first_name;

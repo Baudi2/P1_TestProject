@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         String text = posts.ad.getText();
 
                         // указываем и отправляем строки в бд
-                        DataBase dataBase = new DataBase(id, email, firstName, lastName, avatar, company, url, text);
-                        viewModelData.insert(dataBase);
+                        UserEntity userEntity = new UserEntity(id, email, firstName, lastName, avatar, company, url, text);
+                        viewModelData.insert(userEntity);
                     }// onResponse
                     @Override
                     // a failure method to show the error

@@ -9,7 +9,7 @@ import java.util.List;
 // базы данных
 public class DBRepository {
     private DataBaseDAO dataBaseDAO;
-    private LiveData<List<DataBase>> allData;
+    private LiveData<List<UserEntity>> allData;
 
     // constructor where we assign the variable
     // application is a subclass of context
@@ -23,21 +23,21 @@ public class DBRepository {
     // we have to do this operations in AsyncTask because
     // Room doesn't allow to execute method in main thread
 
-    public void insert(DataBase dataBase){
-        new InsertDataAsyncTask(dataBaseDAO).execute(dataBase);
+    public void insert(UserEntity userEntity){
+        new InsertDataAsyncTask(dataBaseDAO).execute(userEntity);
     }// insert
 
     public void deleteAllData(){
         new DeleteAllDataAsyncTask(dataBaseDAO).execute();
     }// deleteAllData
 
-    public LiveData<List<DataBase>> getAllData() {
+    public LiveData<List<UserEntity>> getAllData() {
         return allData;
     }// getAllNotes
 
     // Creating nested AsyncTask classes for each method to perform them on a background thread
 
-    private static class InsertDataAsyncTask extends AsyncTask<DataBase, Void, Void>{
+    private static class InsertDataAsyncTask extends AsyncTask<UserEntity, Void, Void>{
         // needs this variable to make DB operations
         private DataBaseDAO dataBaseDAO;
 
@@ -48,8 +48,8 @@ public class DBRepository {
         }// constructor
 
         @Override
-        protected Void doInBackground(DataBase... dataBases) {
-            dataBaseDAO.insert(dataBases[0]);
+        protected Void doInBackground(UserEntity... userEntities) {
+            dataBaseDAO.insert(userEntities[0]);
             return null;
         }// doInBackground
     }// AsyncTask

@@ -31,22 +31,22 @@ public class ShowData extends AppCompatActivity {
         viewModelData = new ViewModelProvider
                 (this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()))
                 .get(ViewModelData.class);
-        viewModelData.getAllData().observe(this, dataBases -> {
+        viewModelData.getAllData().observe(this, userEntities -> {
 
             // достаем данные из бд через dataBases
-            if(!dataBases.isEmpty()){
-                for(int i = 0, size = dataBases.size(); i < size; i++){
-                    String url = dataBases.get(i).getAvatar();
+            if(!userEntities.isEmpty()){
+                for(int i = 0, size = userEntities.size(); i < size; i++){
+                    String url = userEntities.get(i).getAvatar();
 
-                    tvText.setText("Id: " + dataBases.get(i).getId() + "\n" + "Email: " + dataBases.get(i).getEmail() + "\n" +
-                            "First name: " + dataBases.get(i).getFirst_name() + "\n" + "Last name: " + dataBases.get(i).getLast_name() +
+                    tvText.setText("Id: " + userEntities.get(i).getId() + "\n" + "Email: " + userEntities.get(i).getEmail() + "\n" +
+                            "First name: " + userEntities.get(i).getFirst_name() + "\n" + "Last name: " + userEntities.get(i).getLast_name() +
                             "\n" + "Avatar: " + "\n");
 
                     Glide.with(ShowData.this).load(url).into(imageGlide);
 
-                    tvText2.setText("Company: " + dataBases.get(i).getCompany() + "\n" +
-                            "Url: " + dataBases.get(i).getUrl() + "\n" +
-                            "Text: " + dataBases.get(i).getText());
+                    tvText2.setText("Company: " + userEntities.get(i).getCompany() + "\n" +
+                            "Url: " + userEntities.get(i).getUrl() + "\n" +
+                            "Text: " + userEntities.get(i).getText());
                 }// else
             } else {
                 tvText.setText("Database is empty");
