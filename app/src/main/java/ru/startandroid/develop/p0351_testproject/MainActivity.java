@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewModelData = new ViewModelProvider
                 (this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()))
                 .get(ViewModelData.class);
-        viewModelData.getAllData().observe(this, dataBases -> {
+        viewModelData.getAllData().observe(this, userEntities -> {
         });
     }// onCreate
 
@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });// enqueue
                 break;
             case R.id.button_two:
-                //tvShow.setText("");
                 viewModelData.deleteAllData();
                 break;
             case R.id.button_three:

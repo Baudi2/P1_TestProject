@@ -10,16 +10,16 @@ public class UserEntity {
     // описание колонн базы
     //  Primary key нужно для указания начальной точки для бд
     @PrimaryKey(autoGenerate = true)
-    int idl;
+    private int idl;
 
-    int id;
-    String email;
-    String first_name;
-    String last_name;
-    String avatar;
-    String company;
-    String url;
-    String text;
+    private int id;
+    private String email;
+    private String first_name;
+    private String last_name;
+    private String avatar;
+    private String company;
+    private String url;
+    private String text;
 
     public UserEntity(int id, String email, String first_name, String last_name, String avatar, String company, String url, String text) {
         this.id = id;
@@ -32,9 +32,14 @@ public class UserEntity {
         this.text = text;
     }// constructor
 
-    public void setId(int idl) {
+    public int getIdl() {
+        return idl;
+    }
+
+
+    public void setIdl(int idl) {
         this.idl = idl;
-    }// setId
+    }
 
     // getters чтобы получать данные из базы (для инкапсуляции)
     public int getId() {

@@ -33,7 +33,7 @@ public class ShowData extends AppCompatActivity {
                 .get(ViewModelData.class);
         viewModelData.getAllData().observe(this, userEntities -> {
 
-            // достаем данные из бд через dataBases
+            // достаем данные из бд через userEntities
             if(!userEntities.isEmpty()){
                 for(int i = 0, size = userEntities.size(); i < size; i++){
                     String url = userEntities.get(i).getAvatar();
@@ -47,7 +47,7 @@ public class ShowData extends AppCompatActivity {
                     tvText2.setText("Company: " + userEntities.get(i).getCompany() + "\n" +
                             "Url: " + userEntities.get(i).getUrl() + "\n" +
                             "Text: " + userEntities.get(i).getText());
-                }// else
+                }// for
             } else {
                 tvText.setText("Database is empty");
             }// else
