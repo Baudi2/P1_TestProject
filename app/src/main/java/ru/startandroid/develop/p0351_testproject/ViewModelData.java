@@ -3,9 +3,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 // класс служит для смен конфигурации приложения
