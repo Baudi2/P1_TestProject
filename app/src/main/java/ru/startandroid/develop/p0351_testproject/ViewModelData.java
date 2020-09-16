@@ -3,6 +3,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 // класс служит для смен конфигурации приложения
@@ -14,12 +17,13 @@ import java.util.List;
 // между репозиторием и mainActivity
 public class ViewModelData extends AndroidViewModel {
 
-    private DBRepository repository;
+    private Repository repository;
     private LiveData<List<UserEntity>> allData;
+    private UserEntity userEntity;
 
     public ViewModelData(@NonNull Application application) {
         super(application);
-        repository = new DBRepository(application);
+        repository = new Repository(application);
         allData = repository.getAllData();
     }// constructor
 
@@ -30,6 +34,10 @@ public class ViewModelData extends AndroidViewModel {
     public void deleteAllData(){
         repository.deleteAllData();
     }// deleteAllData
+
+    public void fetchData(){
+      repository.fetchData();
+    }// fetchData
 
     public LiveData<List<UserEntity>> getAllData(){
         return allData;
